@@ -1,2 +1,8 @@
 # Vim Swap files
 *.swp
+
+# tvsources file
+tvsources.yaml
+
+# logfile
+tenc.log

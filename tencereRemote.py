@@ -52,6 +52,21 @@ with Popen('cec-client', stdout=PIPE, universal_newlines=True) as cec:
             sendkey( urxvt, "g" )
             continue
 
+        # selecting a channel
+        if 'key pressed: select' in line and 'duration' in line:
+            sendkey( urxvt, "Return" )
+            continue
+
+        # going up in list
+        if 'key pressed: up' in line and 'duration' in line:
+            sendkey( urxvt, "Up" )
+            continue
+
+        # going down in list
+        if 'key pressed: down' in line and 'duration' in line:
+            sendkey( urxvt, "Down" )
+            continue
+
         # press exit to stop the player
         if 'key pressed: exit' in line and 'duration' in line:
             sendkey( urxvt, "e" )

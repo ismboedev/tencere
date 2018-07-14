@@ -1,0 +1,12 @@
+---
+ch_name: "euronews"
+sources: 
+        - "http://www.euronews.com/live"
+---
+ch_name: "trt world"
+sources:
+        - "https://trtworld.ercdn.net/trtworld/trtworld_1080p.m3u8"
+---
+ch_name: "ZDF"
+sources: 
+        - "https://www.zdf.de/live-tv"
