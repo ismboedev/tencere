@@ -45,7 +45,7 @@ website which has the stream embedded into it, instead of the direct streaming-u
 - [libcec](https://github.com/Pulse-Eight/libcec) (for hdmi-cec remote control)
 - mpv
 - [streamlink](https://github.com/streamlink/streamlink) (for getting the streaming url from websites with videos)
-- [python-libxdo](https://github.com/rshk/python-libxdo) (and of course xdotool for that)
+- [xdotool](https://github.com/jordansissel/xdotool)
 - [rxvt-unicode](http://software.schmorp.de/pkg/rxvt-unicode.html)
 
 

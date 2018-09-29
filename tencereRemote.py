@@ -1,19 +1,17 @@
 #!/bin/python
 
 from subprocess import Popen, PIPE
-from xdo import Xdo
 
 # define function to send keys to a window in list
 def sendkey( list, str ):
     for i in range( 0, len(list) ):
-        xdo.send_keysequence_window( list[i], str.encode(), delay=10 )
+        Popen( 'xdotool key --window ' + list[i] + ' ' + str, shell=True,
+                universal_newlines=True )
 
 
-# start xdo and search for window urxvt
-
-xdo = Xdo()
-# search return a list, of window ids of urxvt
-urxvt = xdo.search_windows( winclass=str.encode( "urxvt" ) )
+# search and return a list, of window ids of urxvt
+urxvt = Popen( 'xdotool search --class urxvt', shell=True,
+        universal_newlines=True, stdout=PIPE ).communicate()[0].splitlines()
 
 
 # execute cec-command and listen to remote input on TV
