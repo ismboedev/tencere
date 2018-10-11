@@ -98,13 +98,16 @@ class Mpv:
 # class omx
 class Omx:
 
+    with open( 'currChUrl.txt', mode='w' ) as currChUrl:
+        currChUrl.write( '/home/aile/tencere/silence.mp3' )
+
     def __init__( self ):
         printlog( "init Omxplayer" )
-        currChUrl = open("currChUrl.txt", "w")
 
     def load( self, str ):
-        currChUrl.write( str )
-        Popen( "pkill omxplayer" shell=True, universal_newlines=True )
+        with open( 'currChUrl.txt', mode='w' ) as currChUrl:
+            currChUrl.write( str )
+        Popen( "pkill -9 omxplayer", shell=True, universal_newlines=True )
         time.sleep( 1 )
         return 0
 
@@ -114,8 +117,9 @@ class Omx:
         return 0
 
     def stop( self ):
-        currChUrl.write( "/home/aile/tencere/silence.mp3" )
-        Popen( "pkill omxplayer" shell=True, universal_newlines=True )
+        with open( 'currChUrl.txt', mode='w' ) as currChUrl:
+            currChUrl.write( '/home/aile/tencere/silence.mp3' )
+        Popen( "pkill -9 omxplayer", shell=True, universal_newlines=True )
         return 0
 
 
