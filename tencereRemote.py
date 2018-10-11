@@ -19,10 +19,22 @@ urxvt = Popen( 'xdotool search --class urxvt', shell=True,
 with Popen('cec-client', stdout=PIPE, universal_newlines=True) as cec:
     
     for line in cec.stdout:
+
+        # search and return a list, of window ids of urxvt
+        urxvt = []
+        urxvt = Popen( 'xdotool search --class urxvt', shell=True,
+                universal_newlines=True, stdout=PIPE ).communicate()[0].splitlines()
+
         
         # reboot of the system on red keypress on remote
         if 'key pressed: F2' in line and 'duration' in line:
             Popen( 'systemctl reboot', shell=True, universal_newlines=True )
+            continue
+
+        # restart tty1 on blue keypress on remote
+        if 'key pressed: F5' in line and 'duration' in line:
+            Popen( 'systemctl reboot', shell=True, universal_newlines=True )
+            Popen( 'sudo systemctl restart getty@tty1.service', shell=True, universal_newlines=True )
             continue
 
         # channel up 

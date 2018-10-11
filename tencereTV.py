@@ -31,7 +31,7 @@ class Channel:
         self.URLs = []
         # fill with nosource file
         for i in range( 0, len(self.sources) ):
-            self.URLs.append( 'nosource.mp4' )
+            self.URLs.append( '/home/aile/tencere/nosource.mp4' )
         self.getURLs()
 
     def getURLs(self):
@@ -95,6 +95,32 @@ class Mpv:
 
 
 
+# class omx
+class Omx:
+
+    def __init__( self ):
+        printlog( "init Omxplayer" )
+        currChUrl = open("currChUrl.txt", "w")
+
+    def load( self, str ):
+        currChUrl.write( str )
+        Popen( "pkill omxplayer" shell=True, universal_newlines=True )
+        time.sleep( 1 )
+        return 0
+
+    def show( self, str ):
+        com = "showCH " + str
+        Popen( com, shell=True, universal_newlines=True )
+        return 0
+
+    def stop( self ):
+        currChUrl.write( "/home/aile/tencere/silence.mp3" )
+        Popen( "pkill omxplayer" shell=True, universal_newlines=True )
+        return 0
+
+
+
+
 
 
 
@@ -134,8 +160,8 @@ def ch_selected( button, sel ):
     pre_ch = curr_ch
     curr_ch = sel
     printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
-    mpv.load( ch_list[curr_ch].url() )
-    mpv.show( str( curr_ch + 1 ) )
+    player.load( ch_list[curr_ch].url() )
+    player.show( str( curr_ch + 1 ) )
 
 
 # this function is controlling everything
@@ -149,7 +175,7 @@ def inp( key ):
     #    raise urwid.ExitMainLoop()
 
     if key in ( 'q', 'Q' ):
-        mpv.stop()
+        player.stop()
 
 
     # ch up
@@ -157,20 +183,20 @@ def inp( key ):
         pre_ch = curr_ch
         curr_ch = ( curr_ch + 1 + len( ch_list ) ) % len( ch_list )
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
-        mpv.load( ch_list[curr_ch].url() )
-        mpv.show( str( curr_ch + 1 ) )
+        player.load( ch_list[curr_ch].url() )
+        player.show( str( curr_ch + 1 ) )
 
     # ch down
     if key in ( 's', 'S' ):
         pre_ch = curr_ch
         curr_ch = ( curr_ch - 1 + len( ch_list ) ) % len( ch_list )
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
-        mpv.load( ch_list[curr_ch].url() )
-        mpv.show( str( curr_ch + 1 ) )
+        player.load( ch_list[curr_ch].url() )
+        player.show( str( curr_ch + 1 ) )
 
     # channels list
     if key in ( 'l', 'L' ):
-        mpv.stop()
+        player.stop()
 
     # previous channel
     if key in ( 'p', 'P' ):
@@ -178,30 +204,30 @@ def inp( key ):
         curr_ch = pre_ch
         pre_ch = temp_ch
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
-        mpv.load( ch_list[curr_ch].url() )
-        mpv.show( str( curr_ch + 1 ) )
+        player.load( ch_list[curr_ch].url() )
+        player.show( str( curr_ch + 1 ) )
 
     # refresh URLs
     if key in ( 'g', 'G' ):
-        mpv.stop()
+        player.stop()
         printlog( "Refreshing sources" )
         for i in range( 0, len(ch_list) ):
             ch_list[i].getURLs()
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
-        mpv.load( ch_list[curr_ch].url() )
-        mpv.show( str( curr_ch + 1 ) )
+        player.load( ch_list[curr_ch].url() )
+        player.show( str( curr_ch + 1 ) )
 
-    # exit mpv, show list
+    # exit player, show list
     if key in ( 'e', 'E' ):
-        mpv.stop()
+        player.stop()
 
     # change source
     if key in ( 'c', 'C' ):
         ch_list[curr_ch].iterator = ( ch_list[curr_ch].iterator + 1 + \
                 len( ch_list[curr_ch].sources ) ) % len( ch_list[curr_ch].sources )
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
-        mpv.load( ch_list[curr_ch].url() )
-        mpv.show( str( curr_ch + 1 ) )
+        player.load( ch_list[curr_ch].url() )
+        player.show( str( curr_ch + 1 ) )
 
     time.sleep( 1 )
 
@@ -216,8 +242,9 @@ with open("tvsources.yaml", 'r') as ts:
 
 
 
-# start MPV
-mpv = Mpv()
+# start player
+#player = Mpv()
+player = Omx()
 
 
 
