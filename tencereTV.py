@@ -161,10 +161,11 @@ def ch_gotodest():
     global dest_fist_num
     time.sleep(4)
     pre_ch = curr_ch
-    curr_ch = dest_ch - 1
+    curr_ch = ( dest_ch - 1 + len( ch_list ) ) % len( ch_list )
     printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
     player.load( ch_list[curr_ch].url() )
     player.show( str( curr_ch + 1 ) )
+    dest_ch = 0
     dest_fist_num = True
 
 dest_th = Thread( target=ch_gotodest, args=() )
@@ -176,11 +177,11 @@ def addtodest( g ):
 def ch_dest_start( g ):
     global dest_ch
     global dest_fist_num
-    global dest_th
+    global ch_gotodest
     player.stop()
     if dest_fist_num:
         dest_fist_num = False
-        dest_th.start()
+        Thread( target=ch_gotodest, args=() ).start()
     addtodest( g )
     player.show( str(dest_ch) )
 
