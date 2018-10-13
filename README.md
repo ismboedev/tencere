@@ -44,6 +44,7 @@ website which has the stream embedded into it, instead of the direct streaming-u
 - [urwid](https://github.com/urwid/urwid) (for cli)
 - [libcec](https://github.com/Pulse-Eight/libcec) (for hdmi-cec remote control)
 - mpv
+- [omxplayer](https://github.com/popcornmix/omxplayer)
 - [streamlink](https://github.com/streamlink/streamlink) (for getting the streaming url from websites with videos)
 - [xdotool](https://github.com/jordansissel/xdotool)
 - [rxvt-unicode](http://software.schmorp.de/pkg/rxvt-unicode.html)
@@ -51,7 +52,13 @@ website which has the stream embedded into it, instead of the direct streaming-u
 
 ## raspberry-pi
 
-*tencere* runs smoothly on a raspberry pi 3, if mpv is compiled with hardware acceleration.
+*tencere* runs smoothly on a raspberry pi 3, if mpv is compiled with hardware acceleration,
+or with omxplayer. I changed to omxplayer later on in the project, because mpv
+is very slow starting up. Unfortunately omxplayer crashes from time to time,
+why i had to put it in a loop.
+If you want to use it with mpv, you only have to change one line in
+`tencereTV.py`. You should also check some of the paths. I was too lazy to
+write it in a general form.
 
 
 ## why?

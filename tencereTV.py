@@ -153,7 +153,6 @@ temp_ch = 0
 pre_ch = 0
 dest_ch = 0
 dest_fist_num = True
-dest_th = Thread( target=ch_gotodest, args=() )
 
 def ch_gotodest():
     global dest_ch
@@ -162,18 +161,19 @@ def ch_gotodest():
     global dest_fist_num
     time.sleep(4)
     pre_ch = curr_ch
-    curr_ch = dest_ch
+    curr_ch = dest_ch - 1
     printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
     player.load( ch_list[curr_ch].url() )
     player.show( str( curr_ch + 1 ) )
     dest_fist_num = True
 
+dest_th = Thread( target=ch_gotodest, args=() )
 
 def addtodest( g ):
     global dest_ch
     dest_ch = int( str(dest_ch) + g )
 
-def ch_dest_start( g )
+def ch_dest_start( g ):
     global dest_ch
     global dest_fist_num
     global dest_th
@@ -181,8 +181,8 @@ def ch_dest_start( g )
     if dest_fist_num:
         dest_fist_num = False
         dest_th.start()
-    player.show( str(dest_ch) )
     addtodest( g )
+    player.show( str(dest_ch) )
 
 
 
@@ -250,9 +250,7 @@ def inp( key ):
             ch_list[i].getURLs()
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
 
-        printlog( "\n##################################################" )
-        printlog(   "##########             READY            ##########\n" )
-        printlog(   "##################################################\n" )
+        printlog( "\n##################################################" + "\n##########             READY            ##########" + "\n##################################################\n" )
         time.sleep(1)
 
         player.load( ch_list[curr_ch].url() )
@@ -328,9 +326,7 @@ with open("tvsources.yaml", 'r') as ts:
 #player = Mpv()
 player = Omx()
 
-printlog( "\n##################################################" )
-printlog(   "##########             READY            ##########\n" )
-printlog(   "##################################################\n" )
+printlog( "\n##################################################" + "\n##########             READY            ##########" + "\n##################################################\n" )
 
 
 

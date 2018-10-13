@@ -34,7 +34,7 @@ with Popen('cec-client', stdout=PIPE, universal_newlines=True) as cec:
 
         # restart tty1 on red keypress on remote
         if 'key pressed: F2' in line and 'duration' in line:
-            Popen( 'killallandrestart.sh', shell=True, universal_newlines=True )
+            Popen( 'killandrestart.sh', shell=True, universal_newlines=True )
             continue
 
         # channel up 
