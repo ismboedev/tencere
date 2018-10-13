@@ -27,14 +27,14 @@ with Popen('cec-client', stdout=PIPE, universal_newlines=True) as cec:
                 universal_newlines=True, stdout=PIPE ).communicate()[0].splitlines()
 
         
-        # reboot of the system on red keypress on remote
-        if 'key pressed: F2' in line and 'duration' in line:
+        # reboot of the system on blue keypress on remote
+        if 'key pressed: F1' in line and 'duration' in line:
             Popen( 'systemctl reboot', shell=True, universal_newlines=True )
             continue
 
-        # restart tty1 on blue keypress on remote
-        if 'key pressed: F5' in line and 'duration' in line:
-            Popen( 'pkill -9 bspwm', shell=True, universal_newlines=True )
+        # restart tty1 on red keypress on remote
+        if 'key pressed: F2' in line and 'duration' in line:
+            Popen( 'killallandrestart.sh', shell=True, universal_newlines=True )
             continue
 
         # channel up 
@@ -106,5 +106,65 @@ with Popen('cec-client', stdout=PIPE, universal_newlines=True) as cec:
         # when TV is powered off
         if 'power status changed from \'on'in line:
             sendkey( urxvt, "q" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 1' in line and 'duration' in line:
+            sendkey( urxvt, "1" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 2' in line and 'duration' in line:
+            sendkey( urxvt, "2" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 3' in line and 'duration' in line:
+            sendkey( urxvt, "3" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 4' in line and 'duration' in line:
+            sendkey( urxvt, "4" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 5' in line and 'duration' in line:
+            sendkey( urxvt, "5" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 6' in line and 'duration' in line:
+            sendkey( urxvt, "6" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 7' in line and 'duration' in line:
+            sendkey( urxvt, "7" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 8' in line and 'duration' in line:
+            sendkey( urxvt, "8" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 9' in line and 'duration' in line:
+            sendkey( urxvt, "9" )
+            time.sleep(0.5)
+            continue
+
+        # input number keys
+        if 'key pressed: 0' in line and 'duration' in line:
+            sendkey( urxvt, "0" )
             time.sleep(0.5)
             continue

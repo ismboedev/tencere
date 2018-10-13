@@ -5,6 +5,7 @@ from streamlink import Streamlink
 import yaml
 from subprocess import Popen, PIPE
 import urwid
+from threading import Thread
 
 
 # print into a logfile for debugging, or to have a live overvier whats
@@ -150,8 +151,38 @@ def menu( title, ch_list ):
 curr_ch = 0
 temp_ch = 0
 pre_ch = 0
+dest_ch = 0
+dest_fist_num = True
+dest_th = Thread( target=ch_gotodest, args=() )
+
+def ch_gotodest():
+    global dest_ch
+    global curr_ch
+    global pre_ch
+    global dest_fist_num
+    time.sleep(4)
+    pre_ch = curr_ch
+    curr_ch = dest_ch
+    printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
+    player.load( ch_list[curr_ch].url() )
+    player.show( str( curr_ch + 1 ) )
+    dest_fist_num = True
 
 
+def addtodest( g ):
+    global dest_ch
+    dest_ch = int( str(dest_ch) + g )
+
+def ch_dest_start( g )
+    global dest_ch
+    global dest_fist_num
+    global dest_th
+    player.stop()
+    if dest_fist_num:
+        dest_fist_num = False
+        dest_th.start()
+    player.show( str(dest_ch) )
+    addtodest( g )
 
 
 
@@ -218,6 +249,12 @@ def inp( key ):
         for i in range( 0, len(ch_list) ):
             ch_list[i].getURLs()
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
+
+        printlog( "\n##################################################" )
+        printlog(   "##########             READY            ##########\n" )
+        printlog(   "##################################################\n" )
+        time.sleep(1)
+
         player.load( ch_list[curr_ch].url() )
         player.show( str( curr_ch + 1 ) )
 
@@ -232,6 +269,47 @@ def inp( key ):
         printlog( "Channel " + str(curr_ch) + " - " + ch_list[curr_ch].name + "  -  source: " + str( ch_list[curr_ch].iterator ) )
         player.load( ch_list[curr_ch].url() )
         player.show( str( curr_ch + 1 ) )
+
+    # input numbers to go to channel
+    if key in ( '0', '0' ):
+        ch_dest_start( '0' )
+
+    # input numbers to go to channel
+    if key in ( '1', '1' ):
+        ch_dest_start( '1' )
+
+    # input numbers to go to channel
+    if key in ( '2', '2' ):
+        ch_dest_start( '2' )
+
+    # input numbers to go to channel
+    if key in ( '3', '3' ):
+        ch_dest_start( '3' )
+
+    # input numbers to go to channel
+    if key in ( '4', '4' ):
+        ch_dest_start( '4' )
+
+    # input numbers to go to channel
+    if key in ( '5', '5' ):
+        ch_dest_start( '5' )
+
+    # input numbers to go to channel
+    if key in ( '6', '6' ):
+        ch_dest_start( '6' )
+
+    # input numbers to go to channel
+    if key in ( '7', '7' ):
+        ch_dest_start( '7' )
+
+    # input numbers to go to channel
+    if key in ( '8', '8' ):
+        ch_dest_start( '8' )
+
+    # input numbers to go to channel
+    if key in ( '9', '9' ):
+        ch_dest_start( '9' )
+
 
     time.sleep( 1 )
 
@@ -250,6 +328,9 @@ with open("tvsources.yaml", 'r') as ts:
 #player = Mpv()
 player = Omx()
 
+printlog( "\n##################################################" )
+printlog(   "##########             READY            ##########\n" )
+printlog(   "##################################################\n" )
 
 
 
